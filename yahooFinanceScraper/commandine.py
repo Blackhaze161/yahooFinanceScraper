@@ -1,11 +1,9 @@
-from yahooFinanceScraper.jsonreader import get_data
+from yahooFinanceScraper.jsonreader import get_tickers
+from yahooFinanceScraper.datetime import get_time_group
 
 
 def yahoo_finance_run():
-    read_tickers()
+    tickers = get_tickers()
+    date_set = get_time_group()
 
-
-def read_tickers():
-    data = get_data()
-    
 
