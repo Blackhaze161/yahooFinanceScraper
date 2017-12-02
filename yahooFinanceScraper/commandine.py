@@ -6,6 +6,6 @@ def yahoo_finance_run():
 
 
 def read_tickers():
-    print('hello')
-    get_data()
+    data = get_data()
+    
 
