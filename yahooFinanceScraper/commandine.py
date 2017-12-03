@@ -5,10 +5,15 @@ from yahooFinanceScraper.downloader import get_financial_history
 
 
 def yahoo_finance_run():
-    tickers = get_tickers()
+    ticker_map = get_tickers()
+    for ticker in ticker_map:
+        download_historical(ticker_map[ticker])
+
+
+def download_historical(ticker):
     date_set = get_time_group()
-    #crumb = get_crumb("KO")
-    get_financial_history()
+    crumb = get_crumb(ticker)
+    get_financial_history(ticker, date_set, crumb)
 
 
 

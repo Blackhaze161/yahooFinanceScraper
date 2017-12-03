@@ -1,4 +1,4 @@
-import urllib.request
+import requests
 import re
 
 
@@ -9,15 +9,18 @@ def get_crumb(symbol):
 
 def parse_page(symbol):
     yahoo = "https://finance.yahoo.com/quote/%s?p=%s" % (symbol, symbol)
-    tmp_file, headers = urllib.request.urlretrieve(yahoo)
+    r = requests.get(yahoo)
+    r.encoding = 'utf-8'
+    content = r.text.strip()
+    tmp_file = content.split()
     crumb_store = find_crumb_store(tmp_file)
-    crumb = find_crumb(crumb_store)
+    crumb = {'crumb': find_crumb(crumb_store), 'cookie': r.cookies['B']}
     return crumb
 
 
 def find_crumb_store(tmp_file):
     regex = re.compile('"CrumbStore":{"crumb":".*?"}')
-    for line in open(tmp_file):
+    for line in tmp_file:
         match = regex.search(line)
         if match:
             return match.group(0)
